@@ -11,9 +11,9 @@ const DatePicker = () => {
 
   const refObject = getRef(refId);
   if (!refObject) return <Text>Invalid Ref</Text>;
-  const { selectDate } = refObject;
+  const { selectDate, date } = refObject;
 
-  const [value, setValue] = useState(refObject.date || null)
+  const [value, setValue] = useState(date || null)
 
   const handleSelectDate = (dateSelected: string) => {
     if(dateSelected === value){

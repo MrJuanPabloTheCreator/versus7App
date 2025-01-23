@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Input from './input'
 import { TextInputProps } from 'react-native';
-
-interface UserInfo {
-    sub: string;
-    username: string;
-    picture: string;
-}
+import { UserInfo } from 'types/returnedDataTypes';
 
 interface SearchInputProps extends TextInputProps {
     searchTopic?: 'users' | 'teams' | 'fields' | 'tournaments';

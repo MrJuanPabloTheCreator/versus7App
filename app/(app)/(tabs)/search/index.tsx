@@ -53,15 +53,15 @@ const SearchTab = () => {
             />
           ))}
         </ScrollView>
-        <SearchInput placeholder="Search..." style={{  }} searchTopic={searchTopic} callbackFunction={handleSearchResults}/>
+        <SearchInput placeholder="Search..." searchTopic={searchTopic} callbackFunction={handleSearchResults}/>
       </YStack>
       <ScrollView style={{ width: '100%' }}>
         {searchResults.length > 0 && searchTopic === 'users' && (
           <XStack style={{ flexWrap: 'wrap', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
             {searchResults.map((item, index) => (
               <TouchableOpacity key={index} onPress={() => router.push(`(app)/(tabs)/search/users/${item.sub}?username=${encodeURIComponent(item.username)}${
-                item?.picture !== '' && `&picture=${encodeURIComponent(item.picture)}`}`)} style={{ width: '33.33%', marginBottom: 8 }}>
-                <YStack style={{ gap: 8, padding: 12, justifyContent: 'flex-start' }}>
+                item?.picture !== '' && `&picture=${encodeURIComponent(item.picture)}`}`)} style={{ width: '33.33%' }}>
+                <YStack style={{ gap: 8, padding: 12, paddingVertical: 16, justifyContent: 'flex-start' }}>
                   <Image
                     style={{ width: 64, height: 64, borderRadius: 12, overflow: 'hidden' }}
                     src={item?.picture ? item.picture : 'https://randomuser.me/api/portraits/men/1.jpg'}
