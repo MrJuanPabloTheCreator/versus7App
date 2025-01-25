@@ -6,14 +6,14 @@ import useTheme from 'contexts/ThemeContext/useTheme';
 import { AccordionProps } from 'types/componentsTypes';
 import { TouchableOpacity } from 'react-native';
 
-const Accordion:React.FC<AccordionProps> = ({ children, header, style, contentBackgroundColor, contentHeight=200 }) => {
+const Accordion:React.FC<AccordionProps> = ({ children, header, style, contentBackgroundColor, fitContent=false, contentHeight=200 }) => {
     const [viewOpen, setViewOpen] = useState(false)
     const { themeConstants } = useTheme();
 
     return (
-        <YStack style={{ borderRadius: 12, overflow: 'hidden' }}>
+        <YStack fitContent={fitContent} style={{ borderRadius: 12, overflow: 'hidden' }}>
             <TouchableOpacity onPress={() => setViewOpen(!viewOpen)}>
-                <XStack style={[{ backgroundColor: themeConstants.colors.secondary, justifyContent: 'space-between', padding: 16 }, style]}>
+                <XStack fitContent={fitContent} style={[{ backgroundColor: themeConstants.colors.secondary, justifyContent: 'space-between', padding: 16 }, style]}>
                     {header}
                     <AnimatedButton rotate={viewOpen}>
                         <AntDesign name="down" size={20} color={themeConstants.colors.text} />

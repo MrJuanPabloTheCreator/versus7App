@@ -22,8 +22,8 @@ const AnimatedView: React.FC<AnimatedViewProps> = ({ children, style, open, heig
     return (
         <Animated.View
           style={[
-            style,
             { height: heightAnim, width: '100%' },
+            style,
           ]}
           {...props}
         >
