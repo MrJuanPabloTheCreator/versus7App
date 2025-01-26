@@ -13,7 +13,7 @@ const Accordion:React.FC<AccordionProps> = ({ children, header, style, contentBa
     return (
         <YStack fitContent={fitContent} style={{ borderRadius: 12, overflow: 'hidden' }}>
             <TouchableOpacity onPress={() => setViewOpen(!viewOpen)}>
-                <XStack fitContent={fitContent} style={[{ backgroundColor: themeConstants.colors.secondary, justifyContent: 'space-between', padding: 16 }, style]}>
+                <XStack style={[{ backgroundColor: themeConstants.colors.secondary, justifyContent: 'space-between', padding: 16}, style]}>
                     {header}
                     <AnimatedButton rotate={viewOpen}>
                         <AntDesign name="down" size={20} color={themeConstants.colors.text} />

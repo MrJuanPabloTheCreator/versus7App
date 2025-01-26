@@ -43,9 +43,9 @@ const PostCard:React.FC<PostCardProps> = ({ post }) => {
       }
 
     return (
-        <YStack style={{ width: '100%', gap: 8, padding: 8, alignItems: 'flex-start', backgroundColor: themeConstants.colors.background }}>
+        <YStack style={{ gap: 8, padding: 8, alignItems: 'flex-start', backgroundColor: themeConstants.colors.background }}>
             <XStack style={{ gap: 8, justifyContent: 'flex-start' }}>
-                <TouchableOpacity onPress={() => router.push(`(app)/(tabs)/search/users/${post.sub}?username=${encodeURIComponent(post.username)}${
+                <TouchableOpacity onPress={() => router.push(`user/${post.sub}?username=${encodeURIComponent(post.username)}${
                     post?.picture !== '' && `&picture=${encodeURIComponent(post.picture)}`}`)}
                 >
                     <Image
@@ -53,6 +53,14 @@ const PostCard:React.FC<PostCardProps> = ({ post }) => {
                         src={post?.picture ? post.picture : 'https://randomuser.me/api/portraits/men/1.jpg'}
                     />
                 </TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => router.push(`team/${post.sub}?username=${encodeURIComponent(post.username)}${
+                    post?.picture !== '' && `&picture=${encodeURIComponent(post.picture)}`}`)}
+                >
+                    <Image
+                        style={{ width: 52, height: 52, borderRadius: 100, overflow: 'hidden' }}
+                        src={post?.picture ? post.picture : 'https://randomuser.me/api/portraits/men/1.jpg'}
+                    />
+                </TouchableOpacity> */}
                 <YStack style={{ alignItems: 'flex-start' }} fitContent>
                     <XStack style={{ gap: 3 }} fitContent>
                         <Text>{post.username}</Text>

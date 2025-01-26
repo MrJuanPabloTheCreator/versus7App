@@ -7,7 +7,7 @@ import { Button, Text, View, XStack, YStack } from 'components';
 import { facilities, fakeSchedules } from 'constants/fakeData';
 import useTheme from 'contexts/ThemeContext/useTheme';
 
-const Facility = () => {
+const Field = () => {
   const { id } = useLocalSearchParams();
   const { themeConstants } = useTheme();
 
@@ -49,7 +49,7 @@ const Facility = () => {
   );
 };
 
-export default Facility;
+export default Field;
 
 const styles = StyleSheet.create({
   container: {

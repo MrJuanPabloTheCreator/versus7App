@@ -1,7 +1,7 @@
 import { Text, View } from 'components'
 import React from 'react'
 
-const Index = () => {
+const ShieldTab = () => {
   return (
     <View>
         <Text>
@@ -11,4 +11,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default ShieldTab

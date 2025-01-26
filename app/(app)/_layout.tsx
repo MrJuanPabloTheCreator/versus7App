@@ -45,17 +45,6 @@ const AppLayout = () => {
                     name="(forms)" 
                     options={{ headerShown: false }}
                 />
-                {/* <Stack.Screen 
-                    name="users/[id]"
-                    options={{ 
-                        headerTitle: '',
-                        headerBackTitle: 'back'
-                }}
-                />
-                <Stack.Screen 
-                    name="posts/[id]" 
-                    options={{ presentation: 'modal', headerTitle: ''}}
-                /> */}
             </Stack>
         </WebSocketProvider>
     );
