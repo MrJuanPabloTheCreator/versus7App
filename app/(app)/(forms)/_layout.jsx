@@ -29,7 +29,7 @@ const FormsLayout = () => {
             }}
         >
             <Stack.Screen 
-                name="newPostForm"
+                name="newNoteForm"
             />
              <Stack.Screen 
                 name="utils/datePicker"

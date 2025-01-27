@@ -149,12 +149,12 @@ const NewNoteForm = () => {
       
       <AddDetails
         text={watch('location') || 'Agregar Ubicacion'}
-        onPress={() => router.push(`(app)/(forms)/utils/locationPicker?refId=${selectLocationRefId.current}`)}
+        onPress={() => router.push(`utils/locationPicker?refId=${selectLocationRefId.current}`)}
         logo={<SimpleLineIcons name="location-pin" size={24} color={themeConstants.colors.text} />}
       />
       <AddDetails
         text={watch('date').split('T')[0] || 'Agregar Fecha/Hora'}
-        onPress={() => router.push(`(app)/(forms)/utils/datePicker?refId=${selectDateRefId.current}`)}
+        onPress={() => router.push(`utils/datePicker?refId=${selectDateRefId.current}`)}
         logo={<MaterialCommunityIcons name="calendar-clock-outline" size={24} color={themeConstants.colors.text} />}
       />
       {/* <Button text={"Get all refs"} onPress={getAllRefs}/> */}

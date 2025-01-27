@@ -50,12 +50,6 @@ const DefaultStack: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         ),
       }}
     >
-      <Stack.Screen 
-        name="user/[user]" 
-        options={({ route }:{route: any}) => ({
-          headerTitle: `${route.params.username}`
-        })}
-      />
       {children}
     </Stack>
   )

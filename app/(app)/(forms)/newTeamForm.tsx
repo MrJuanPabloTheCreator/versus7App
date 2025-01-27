@@ -1,28 +1,145 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Image, ScrollView, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ScrollView, TouchableOpacity, View } from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome5';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
 
 import { AddDetails, Button, Input, Text, XStack, YStack } from 'components'
 import { NewTeamFormFields } from 'types/formTypes';
 import useTheme from 'contexts/ThemeContext/useTheme';
 import { UserInfo } from 'types/returnedDataTypes';
 import { registerRef, removeRef } from './utils/refRegistry';
+import useSession from 'contexts/SessionContext/useSession';
+
+type TeamIcon = {
+  teamIconURI: string;
+  teamIconMetadata: {
+    fileType: string;
+    fileSize: number;
+  }
+}
 
 const NewTeamForm = () => {
   const { setValue, handleSubmit, control, watch, formState: { errors }, } = useForm<NewTeamFormFields>({
     defaultValues: { teamName: '', teamIconURL: '', invitedUsers: []}
   })
   const [invitedUsers, setInvitedUsers] = useState<UserInfo[]>([])
+  const [teamIcon, setTeamIcon] = useState<TeamIcon | null>(null)
+
+  const { session, getAuthorizer } = useSession();
   const { themeConstants } = useTheme();
   const router = useRouter();
 
   const selectUsersRefId = useRef<string | null>(null);
 
-  const onSubmit = (form: NewTeamFormFields) => {
-    console.log(form)
+  const getSignedURL = async (fileType: string, fileSize: number) => {
+    try {
+      const authorizer = await getAuthorizer();
+      const getSignedURLresponse = await fetch('https://5k8r7j8jm0.execute-api.sa-east-1.amazonaws.com/Development/S3', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authorizer}`,
+        },
+        body: JSON.stringify({
+          fileType,
+          fileSize,
+        }),
+      });
+
+      if(getSignedURLresponse.ok){
+        const { signedUrl, imageUrl } = await getSignedURLresponse.json();
+        return { signedUrl, imageUrl };
+      } else {
+        throw new Error("Failed to fetch signed URL");
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  const handlePickImage = async () => {
+    // const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    // if (!permissionResult.granted) {
+    //   Alert.alert("Permission required", "Please allow access to your photo library to upload an image.");
+    //   return;
+    // }
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        const fileType = result.assets[0].mimeType;
+        const fileSize = result.assets[0].fileSize;
+
+        if(!fileType || !fileSize){
+          throw new Error('Error obtaining image metadata')
+        }
+
+        const maxSizeInMB = 5;
+        const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+        if (fileSize > maxSizeInBytes) {
+          throw new Error(`File size must be under ${maxSizeInMB} MB.`);
+        }
+
+        const teamIcon = {
+          teamIconURI: result.assets[0].uri,
+          teamIconMetadata: { fileType, fileSize }
+        }
+        setTeamIcon(teamIcon);
+      }
+    } catch(error){
+      Alert.alert('Error uploading image',`${error}`);
+    }
+  };
+
+  const onSubmit = async (formData: NewTeamFormFields) => {
+    console.log(formData)
+    try {
+      if(teamIcon?.teamIconMetadata){
+        const { fileType, fileSize } = teamIcon.teamIconMetadata;
+        const { signedUrl, imageUrl } = await getSignedURL(fileType, fileSize);
+
+        const uploadResponse = await fetch(signedUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': fileType,
+            'Content-Length': String(fileSize)
+          },
+          body: await fetch(teamIcon.teamIconURI).then(res => res.blob()),
+        });
+
+        if(uploadResponse.ok){
+          formData.teamIconURL = imageUrl;       
+        } else {
+          throw new Error("Failed to upload image");
+        }
+      }
+
+      const postTeam = await fetch('https://5k8r7j8jm0.execute-api.sa-east-1.amazonaws.com/Development/teams', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${await getAuthorizer()}`,
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if(postTeam.ok){
+        console.log(await postTeam.json())
+      } else {
+        throw new Error("Failed to post team");
+      }
+    } catch(error) {
+      Alert.alert('Error creating team.',`${error}`);
+    }
   }
 
   const updateList = (updatedList: UserInfo[]) => {
@@ -50,14 +167,17 @@ const NewTeamForm = () => {
     <ScrollView>
       <YStack style={{ gap: 12, padding: 8 }}>
 
-        <TouchableOpacity style={{ }}>
-          <View style={{ backgroundColor: themeConstants.colors.background, borderRadius: '100%', padding: 24 }}>
-            {/* <Image
-              style={{ width: 36, height: 36, borderRadius: 36, overflow: 'hidden' }}
-              src={session?.picture}
-            /> */}
-            <MaterialCommunityIcons name="shield-edit-outline" size={68} color={'white'}/>
-          </View>
+        <TouchableOpacity onPress={handlePickImage}> 
+          {teamIcon ? (
+            <Image
+              style={{ width: 68, height: 68, borderRadius: 36, overflow: 'hidden' }}
+              src={teamIcon.teamIconURI}
+            />
+          ):(
+            <View style={{ backgroundColor: themeConstants.colors.background, borderRadius: '100%', padding: 24 }}>
+              <MaterialCommunityIcons name="shield-edit-outline" size={68} color={'white'}/>
+            </View>
+          )}
         </TouchableOpacity>
 
         <Input 

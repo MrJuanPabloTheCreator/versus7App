@@ -15,7 +15,7 @@ export interface NewPostFormFields {
 }
 
 export interface NewTeamFormFields {
-    teamIconURL: string
+    teamIconURL: string;
     teamName: string;
     invitedUsers: string[]
 }
