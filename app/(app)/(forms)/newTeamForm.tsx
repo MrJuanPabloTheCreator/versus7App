@@ -104,7 +104,7 @@ const NewTeamForm = () => {
           onPress={() => router.push(`(app)/(forms)/utils/addTeamMembers?refId=${selectUsersRefId.current}`)}
         />
 
-        <Button text={"Submit"} type='modest' onPress={handleSubmit(onSubmit)}/>
+        <Button text={"Crear equipo"} type='modest' onPress={handleSubmit(onSubmit)}/>
 
       </YStack>
     </ScrollView>

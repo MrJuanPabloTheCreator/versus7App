@@ -7,6 +7,7 @@ import refreshTokens from './refreshTokens';
 import retrieveTokens from './retrieveTokens';
 import storeTokens from './storeTokens';
 import clearTokens from './clearTokens';
+import { getItemAsync } from 'expo-secure-store';
 
 const SessionContext = createContext<SessionContextValue | undefined>(undefined);
 
@@ -54,6 +55,13 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         }
     }
 
+    const getAuthorizer = async () => {
+        const accessToken = await getItemAsync('accessToken');
+        if(accessToken) {
+            return accessToken;
+        } else throw new Error('No authorizer found');
+    }
+
     const checkAndRefreshTokens = async () => {
         try {
             // need to check if user exists!!!
@@ -92,7 +100,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     
 
     return (
-        <SessionContext.Provider value={{ isLoading, session, newSession, handleSignOut }}>
+        <SessionContext.Provider value={{ isLoading, session, newSession, getAuthorizer, handleSignOut }}>
             {children}
         </SessionContext.Provider>
     );

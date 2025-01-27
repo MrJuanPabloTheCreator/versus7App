@@ -11,17 +11,17 @@ import { useRouter } from 'expo-router';
 const createOptions = [
   {
     title: 'New Note',
-    route: '/(forms)/newPostForm',
+    route: 'newNoteForm',
     icon: <Entypo name="new-message" size={24} color="white" />
   },
   {
     title: 'Crear Equipo',
-    route: '/(forms)/newTeamForm',
+    route: 'newTeamForm',
     icon: <MaterialCommunityIcons name="shield-plus" size={24} color="white" />
   },
   {
     title: 'Organizar Partido',
-    route: '/(forms)/newMatchForm',
+    route: 'newMatchForm',
     icon: <FontAwesome name="soccer-ball-o" size={24} color="white" />
   },
   // {

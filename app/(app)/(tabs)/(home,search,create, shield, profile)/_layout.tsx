@@ -50,6 +50,12 @@ const DefaultStack: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         ),
       }}
     >
+      <Stack.Screen 
+        name="user/[user]" 
+        options={({ route }:{route: any}) => ({
+          headerTitle: `${route.params.username}`
+        })}
+      />
       {children}
     </Stack>
   )
@@ -134,7 +140,7 @@ export default function SharedLayout({ segment }: { segment: string }) {
           options={{ 
             headerLeft: () => (<Text style={{ fontSize: 24, fontWeight: 500 }}>{session?.preferred_username}</Text>),
             headerRight: () => (
-            <TouchableOpacity onPress={() => router.push('(app)/(tabs2)/(profile)/profile/settings')}>
+            <TouchableOpacity onPress={() => router.push('profile/settings')}>
               <Feather name="settings" size={28} color={themeConstants.colors.text} />
             </TouchableOpacity>
             ),

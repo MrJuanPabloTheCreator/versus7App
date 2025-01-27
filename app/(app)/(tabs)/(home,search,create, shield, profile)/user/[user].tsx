@@ -1,22 +1,106 @@
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Text, View, YStack } from 'components'
+import { Button, PostCard, Text, View, XStack, YStack } from 'components'
+import useSession from 'contexts/SessionContext/useSession';
+import useTheme from 'contexts/ThemeContext/useTheme';
+
+const profileTabs = [
+  'Activity',
+  'Stats',
+  'Teams',
+  'Games'
+]
+
+const trophies = [
+  require('assets/trophy1.png'),
+  require('assets/trophy2.png'),
+  require('assets/trophy4.png'),
+];
+
+const medals = [
+  require('assets/medal1.png'),
+  require('assets/medal2.png'),
+];
 
 const User = () => {
   const { id, username, picture } = useLocalSearchParams()
+  const [activeTab, setActiveTab] = useState('Activity')
+  const { themeConstants } = useTheme();
+  const { session } = useSession();
 
   const pictureUrl = Array.isArray(picture) ? picture[0] : picture;
 
   return (
     <View style={styles.container}>
-      <YStack style={{ gap: 8 }}>
-        <Image
-          style={{ width: 72, height: 72, borderRadius: 100, overflow: 'hidden' }}
-          src={pictureUrl || 'https://randomuser.me/api/portraits/men/1.jpg'}
-        />
-        <Text>{username}</Text>
+      <XStack style={{ gap: 8, padding: 8, justifyContent: 'flex-start' }}>
+        <YStack fitContent>
+          <Image
+            style={{ width: 150, height: 150, borderRadius: 25 }}
+            src={pictureUrl || 'https://randomuser.me/api/portraits/men/1.jpg'}
+          />
+          <Text style={{ 
+            position: 'absolute', 
+            bottom: -10, 
+            right: -10, 
+            zIndex: 10, 
+            backgroundColor: 'black',
+            color: themeConstants.colors.primary,
+            textAlign: 'center',
+            width: 44,
+            height: 44,
+            borderRadius: 5,
+            fontSize: 32,
+            fontWeight: 600
+          }}>
+            7
+          </Text>
+        </YStack>
+        <YStack style={{ flex: 1, gap: 12 }}>
+          <XStack style={{ gap: 12 }}>
+            {trophies.map((source, index) => (
+              <Image
+                key={index}
+                style={{ width: 40, height: 55, borderRadius: 0 }}
+                source={source}
+              />
+            ))}
+          </XStack>
+          <XStack style={{ gap: 12 }}>
+            {medals.map((source, index) => (
+              <Image
+                key={index}
+                style={{ width: 36, height: 48, borderRadius: 0 }}
+                source={source}
+              />
+            ))}
+          </XStack>
+        </YStack>
+      </XStack>
+      <XStack style={{ gap: 8, padding: 8 }}>
+        <Button style={{ flex: 1, paddingVertical: 10}} text={'Amigos'}/>
+        <Button style={{ flex: 1, paddingVertical: 10}} type='default' text={'Enviar mensaje'}/>
+      </XStack>
+      <YStack style={{ backgroundColor: themeConstants.colors.background, overflow: 'hidden' }}>
+        <XStack style={{ backgroundColor: themeConstants.colors.secondary}}>
+          {profileTabs.map((tab, index) => (
+            <TouchableOpacity 
+              key={index} 
+              onPress={() => setActiveTab(tab)}
+              style={[activeTab === tab && { backgroundColor: themeConstants.colors.background},{ width: '25%', alignItems: 'center', paddingVertical: 10 }]}
+            >
+              <Text style={[activeTab === tab && { color: themeConstants.colors.primary},{ fontWeight: 500}]}>{tab}</Text>
+            </TouchableOpacity>
+          ))}
+        </XStack>
+        <YStack style={{ alignItems: 'flex-start', padding: 16 }}>
+          <Text>Nombre: Juan Pablo</Text>
+          <Text>Edad: 24</Text>
+          <Text>Posicion/es: Deltantero/Punta</Text>
+          <Text>Altura: 176cm</Text>
+          <Text>Nacionalidad: Chile 🇨🇱</Text>
+        </YStack>
       </YStack>
     </View>
   )
@@ -26,7 +110,6 @@ export default User
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12
     // alignItems: 'center',
     // justifyContent: 'center',
   },

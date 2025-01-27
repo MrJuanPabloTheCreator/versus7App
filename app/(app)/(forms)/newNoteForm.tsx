@@ -7,27 +7,32 @@ import { useController, useForm } from 'react-hook-form';
 
 import useTheme from 'contexts/ThemeContext/useTheme';
 import useSession from 'contexts/SessionContext/useSession';
-import { AddDetails, Button, SelectAccount, TextArea, XStack, YStack } from 'components'
+import { AddDetails, Button, Input, SelectAccount, Text, TextArea, XStack, YStack } from 'components'
 import { NewPostFormFields } from 'types/formTypes';
 
 const options = [
-  "Buscando Jugadores",
+  "Buscando Jugador/es",
   "Buscando Rival",
   "Buscando Equipo",
   "Buscando Liga",
   "Buscando Torneo",
-  "Busco",
-  "Otro" 
+  "Otro"
 ]
 
-const NewPostForm = () => {
-  const { session } = useSession();
+const NewNoteForm = () => {
+  const { session, getAuthorizer } = useSession();
   const { 
-    setValue, handleSubmit, control, watch, formState: { errors },
+    setValue, handleSubmit, unregister, control, watch, formState: { errors },
   } = useForm<NewPostFormFields>({
-    defaultValues: { sub: session?.sub, title: '', description: '', location: '', date: '' }
+    defaultValues: { 
+      user: {
+        sub: session?.sub,
+        username: session?.preferred_username,
+        picture: session?.picture,
+      }, title: options[0], description: '', location: '', date: '' }
   })
-  
+
+  const [customTitle, setCustomTitle] = useState(false)
   const selectDateRefId = useRef<string | null>(null);
   const selectLocationRefId = useRef<string | null>(null);
 
@@ -44,20 +49,41 @@ const NewPostForm = () => {
   const locationObject = { selectLocation, location: () => watch('location')}
   const dateObject = { selectDate, date: () => watch('date')}
 
-  const onSubmit = (form: any) => {
-    console.log(form)
+  const onSubmit = async (formData: NewPostFormFields) => {
+    if(formData.customTitle){
+      formData.title = formData.customTitle
+      delete formData.customTitle
+    }
+
+    try {
+      const authorizer = await getAuthorizer();
+      //add authorizer to endpoint
+      const formResponse = await fetch('https://5k8r7j8jm0.execute-api.sa-east-1.amazonaws.com/Development/notes', {
+        method: 'POST',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   'Authorization': `Bearer ${authorizer}`,
+        // },
+        body: JSON.stringify(formData)
+      })
+      const response = await formResponse.json()
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  // const handleValueChange = async (field) => {
-  //   if(field === 'title' && watch('title') !== 'Otro'){
-  //     unregister('customTitle')
-  //   }
-  //   await trigger(field);
-  // }
-
-  // useEffect(() => {
-  //   console.log('Component re-rendered');
-  // });
+  const handleTitleChange = async (option: string) => {
+    if(option !== watch('title')) {
+      setValue('title', option)
+      if(option === 'Otro'){
+        setCustomTitle(true)
+      } else {
+        setCustomTitle(false)
+        unregister('customTitle')
+      }
+    }
+  }
 
   const removeRefs = () => {
     if (selectDateRefId.current) {
@@ -77,6 +103,10 @@ const NewPostForm = () => {
     };
   }, [])
 
+  // useEffect(() => {
+  //   console.log('Component re-rendered');
+  // });
+
   return (
     <YStack style={{ padding: 8, gap: 8 }}>
       <SelectAccount session={session}/>
@@ -88,10 +118,21 @@ const NewPostForm = () => {
             key={index}
             text={option}
             type={watch('title') === option ? 'active' : 'default'}
-            onPress={() => (setValue('title', watch('title') !== option ? option : ''))}
+            onPress={() => handleTitleChange(option)}
           />
         ))}
       </XStack>
+
+      {customTitle && 
+        <Input 
+          placeholder='Enter custom title...'
+          name='customTitle'
+          control={control}
+          rules={{
+            required: 'Custom title is required'
+          }}
+        />
+      }
 
       <TextArea
         placeholder="Enter a description..."
@@ -117,9 +158,9 @@ const NewPostForm = () => {
         logo={<MaterialCommunityIcons name="calendar-clock-outline" size={24} color={themeConstants.colors.text} />}
       />
       {/* <Button text={"Get all refs"} onPress={getAllRefs}/> */}
-      <Button text={"Submit"} type='modest' onPress={handleSubmit(onSubmit)}/>
+      <Button text={"Subir nota"} type='modest' onPress={handleSubmit(onSubmit)}/>
     </YStack>
   )
 }
 
-export default NewPostForm;
+export default NewNoteForm;

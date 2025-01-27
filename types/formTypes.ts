@@ -1,11 +1,14 @@
+import { UserInfo } from "./returnedDataTypes";
+
 export interface LoginForm {
     email: string
     password: string
 }
 
 export interface NewPostFormFields {
-    sub: string;
+    user: UserInfo;
     title: string;
+    customTitle?: string;
     description: string;
     location: string;
     date: string;

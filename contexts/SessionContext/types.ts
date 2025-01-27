@@ -23,6 +23,7 @@ interface Tokens {
 interface SessionContextValue {
     isLoading: boolean;
     session: Session | null;
+    getAuthorizer: () => Promise<string | Error>
     newSession: (tokens: Tokens) => Promise<void>
     handleSignOut: () => Promise<void>
 }
