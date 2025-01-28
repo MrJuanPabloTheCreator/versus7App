@@ -1,13 +1,15 @@
 import { useRouter } from 'expo-router';
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { getItemAsync } from 'expo-secure-store';
 
 import getTokenRemainingTime from './getTokenRemainingTime';
 import refreshTokens from './refreshTokens';
 import retrieveTokens from './retrieveTokens';
 import storeTokens from './storeTokens';
 import clearTokens from './clearTokens';
-import { getItemAsync } from 'expo-secure-store';
+import { FriendInfo } from 'types/returnedDataTypes';
+import { DecodedIdToken, Session, SessionContextValue, Tokens } from './types';
 
 const SessionContext = createContext<SessionContextValue | undefined>(undefined);
 
@@ -26,7 +28,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         }
     }
 
-    const setUserData = (idToken: string) => {
+    const setUserData = async (idToken: string) => {
         try {
             const decodedToken = jwtDecode<DecodedIdToken>(idToken);
             console.log(decodedToken)
@@ -35,8 +37,37 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
             const preferred_username = decodedToken["preferred_username"];
             const email = decodedToken["email"];
             const picture = decodedToken["picture"];
-    
-            setSession({ sub, username, preferred_username, email, picture });
+
+            const encodedSub = encodeURIComponent(sub);
+
+            const initialDataResponse = await fetch(`https://5k8r7j8jm0.execute-api.sa-east-1.amazonaws.com/Development/me?user_id=${encodedSub}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                }
+            })
+            if(initialDataResponse.ok){
+                console.log('Succesfully fetched initial data from the server')
+                const { settings, friendships } = await initialDataResponse.json()
+                console.log( friendships)
+
+                const friendsMap = new Map();
+                friendships.forEach((friend: FriendInfo) => {
+                    friendsMap.set(friend.sub, {...friend});
+                });
+
+                setSession({ 
+                    sub,
+                    username, 
+                    preferred_username, 
+                    email, 
+                    picture,
+                    friends: friendsMap
+                });
+            } else {
+                console.log('Error fetching initial data from the server')
+                setSession({ sub, username, preferred_username, email, picture });
+            }
             router.push('/');
         } catch (error) {
             console.log('Error setting user data.', error);

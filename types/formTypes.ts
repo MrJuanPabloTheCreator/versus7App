@@ -10,6 +10,7 @@ export interface NewPostFormFields {
     title: string;
     customTitle?: string;
     description: string;
+    timestamp: string;
     location: string;
     date: string;
 }

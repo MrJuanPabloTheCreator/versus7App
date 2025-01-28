@@ -35,7 +35,10 @@ interface Facility {
     name: string;
     pictures: string[];
     address: string;
-    coordinates: string;
+    coordinates: {
+        x: number;
+        y: number;
+    };
 }
 
 interface UserFollowingTimelines {

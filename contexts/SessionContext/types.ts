@@ -1,4 +1,6 @@
-interface DecodedIdToken {
+import { FriendInfo } from "types/returnedDataTypes";
+
+export interface DecodedIdToken {
     sub: string;
     "cognito:username": string;
     preferred_username: string;
@@ -6,21 +8,22 @@ interface DecodedIdToken {
     picture?: string;
 }
 
-interface Session {
+export interface Session {
     sub: string;
     username: string;
     preferred_username: string;
     email: string;
     picture?: string;
+    friends?: Map<string, FriendInfo>
 }
 
-interface Tokens {
+export interface Tokens {
     idToken: string;
     accessToken: string;
     refreshToken: string;
 }
 
-interface SessionContextValue {
+export interface SessionContextValue {
     isLoading: boolean;
     session: Session | null;
     getAuthorizer: () => Promise<string | Error>

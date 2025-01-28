@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { facilities } from 'constants/fakeData';
 import useTheme from 'contexts/ThemeContext/useTheme';
 
-const topicOptions = ['users','teams','fields','tournaments']
+const topicOptions = ['fields','users','teams','tournaments']
 
 const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -23,7 +23,7 @@ interface SearchResultsTypes {
 }
 
 const SearchTab = () => {
-  const [searchTopic, setSearchTopic] = useState<any>('users')
+  const [searchTopic, setSearchTopic] = useState<any>(topicOptions[0])
   const [searchResults, setSearchResults] = useState<UserInfo[]>([])
 
   const { themeConstants } = useTheme();

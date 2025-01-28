@@ -1,4 +1,4 @@
-import { Image, StyleSheet } from 'react-native';
+import { Image, ScrollView, StyleSheet } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -6,6 +6,8 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Button, Text, View, XStack, YStack } from 'components';
 import { facilities, fakeSchedules } from 'constants/fakeData';
 import useTheme from 'contexts/ThemeContext/useTheme';
+
+const API_KEY = 'AIzaSyDrMseunnRkOyTEjRH9zfxRzk4uBpcIQ38'
 
 const Field = () => {
   const { id } = useLocalSearchParams();
@@ -17,8 +19,11 @@ const Field = () => {
 
   if (!facility) return <Text>Facility not found</Text>;
 
+  const { x, y } = facility.coordinates;
+  const mapURL = `https://maps.googleapis.com/maps/api/staticmap?size=600x400&zoom=15&markers=color:red|${x},${y}&key=${API_KEY}`
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
         <Image
             style={{ width: '100%', height: 200 }}
             source={{ uri: facility.pictures[0] }}
@@ -45,7 +50,11 @@ const Field = () => {
                 ))}
             </XStack>
         </YStack>
-    </View>
+        <Image
+            style={{ width: '100%', height: 300, marginBottom: 200, marginTop: 24 }}
+            src={mapURL}
+        />
+    </ScrollView>
   );
 };
 

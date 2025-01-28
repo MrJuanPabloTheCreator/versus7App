@@ -1,5 +1,29 @@
 export const facilities: Facility[] = [
     {
+        facility_id: '11',
+        name: 'Ciudad Deportiva Iván Zamorano',
+        pictures: [
+            'https://lh3.googleusercontent.com/p/AF1QipOi71ipWEgUjS5LSymYOOl5eErCQZmquy6j-1Rq=s1360-w1360-h1020'
+        ],
+        address: 'Av. Padre Hurtado 2650, Las Condes, Santiago, Chile',
+        coordinates: {
+            x: -33.4286099945508,
+            y: -70.53722122333065
+        }
+    },
+    {
+        facility_id: '12',
+        name: 'Club Cordillera',
+        pictures: [
+            'https://lh5.googleusercontent.com/p/AF1QipOENHp3G15d5TTvnqPGwlt7ObImJsnvR7PJuXiH=w408-h246-k-no'
+        ],
+        address: 'Av. Departamental 3837, La Florida, Santiago, Chile',
+        coordinates: {
+            x: -33.512992297183246,
+            y: -70.55720158738552
+        }
+    },
+    {
         facility_id: '1',
         name: 'Soccer Field 1',
         pictures: [
@@ -7,7 +31,10 @@ export const facilities: Facility[] = [
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQULg1UIZ1Mzj3Wd6NRBUFS0a55o7MBnDlZ8w&s'
         ],
         address: '123 Main St, City, Country',
-        coordinates: '40.712776, -74.005974'
+        coordinates: {
+            x: 40.712776,
+            y: -74.005974
+        }
     },
     {
         facility_id: '2',
@@ -17,7 +44,10 @@ export const facilities: Facility[] = [
             'https://www.aturf.com/wp-content/uploads/2021/11/sahlens-flash-field-corner-kick-sunset-940x410.jpg'
         ],
         address: '456 Elm St, City, Country',
-        coordinates: '34.052235, -118.243683'
+        coordinates: {
+            x: 34.052235,
+            y: -118.243683
+        }
     },
     {
         facility_id: '3',
@@ -27,7 +57,10 @@ export const facilities: Facility[] = [
             'https://sportsgrass.com/wp-content/uploads/2018/12/1Q5Z8fGg.jpeg'
         ],
         address: '789 Oak St, City, Country',
-        coordinates: '51.507351, -0.127758'
+        coordinates: {
+            x: 51.507351,
+            y: -0.127758
+        }
     },
     {
         facility_id: '4',
@@ -37,7 +70,10 @@ export const facilities: Facility[] = [
             'https://asburyeagles.com/images/2023/5/5/IMG_7210.JPG'
         ],
         address: '101 Pine St, City, Country',
-        coordinates: '48.856613, 2.352222'
+        coordinates: {
+            x: 48.856613,
+            y: 2.352222
+        }
     },
     {
         facility_id: '5',
@@ -47,7 +83,10 @@ export const facilities: Facility[] = [
             'https://example.com/soccer_field5_pic2.jpg'
         ],
         address: '202 Maple St, City, Country',
-        coordinates: '35.689487, 139.691711'
+        coordinates: {
+            x: 35.689487,
+            y: 139.691711
+        }
     },
     {
         facility_id: '6',
@@ -57,7 +96,10 @@ export const facilities: Facility[] = [
             'https://example.com/soccer_field6_pic2.jpg'
         ],
         address: '303 Birch St, City, Country',
-        coordinates: '55.755825, 37.617298'
+        coordinates: {
+            x: 55.755825,
+            y: 37.617298
+        }
     },
     {
         facility_id: '7',
@@ -67,7 +109,10 @@ export const facilities: Facility[] = [
             'https://example.com/soccer_field7_pic2.jpg'
         ],
         address: '404 Cedar St, City, Country',
-        coordinates: '40.416775, -3.703790'
+        coordinates: {
+            x: 40.416775,
+            y: -3.703790
+        }
     },
     {
         facility_id: '8',
@@ -77,7 +122,10 @@ export const facilities: Facility[] = [
             'https://example.com/soccer_field8_pic2.jpg'
         ],
         address: '505 Walnut St, City, Country',
-        coordinates: '52.520008, 13.404954'
+        coordinates: {
+            x: 52.520008,
+            y: 13.404954
+        }
     },
     {
         facility_id: '9',
@@ -87,7 +135,10 @@ export const facilities: Facility[] = [
             'https://example.com/soccer_field9_pic2.jpg'
         ],
         address: '606 Chestnut St, City, Country',
-        coordinates: '41.902782, 12.496366'
+        coordinates: {
+            x: 41.902782,
+            y: 12.496366
+        }
     },
     {
         facility_id: '10',
@@ -97,9 +148,13 @@ export const facilities: Facility[] = [
             'https://example.com/soccer_field10_pic2.jpg'
         ],
         address: '707 Spruce St, City, Country',
-        coordinates: '37.774929, -122.419418'
+        coordinates: {
+            x: 37.774929,
+            y: -122.419418
+        }
     }
 ];
+
 
 export const fakeSchedules = [ '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', 
 '22:00', '23:00', '00:00', '01:00', '02:00', '03:00']

@@ -9,6 +9,7 @@ import useTheme from 'contexts/ThemeContext/useTheme';
 import useSession from 'contexts/SessionContext/useSession';
 import { AddDetails, Button, Input, SelectAccount, Text, TextArea, XStack, YStack } from 'components'
 import { NewPostFormFields } from 'types/formTypes';
+import { Alert } from 'react-native';
 
 const options = [
   "Buscando Jugador/es",
@@ -55,6 +56,8 @@ const NewNoteForm = () => {
       delete formData.customTitle
     }
 
+    formData.timestamp = new Date().toISOString();
+
     try {
       const authorizer = await getAuthorizer();
       //add authorizer to endpoint
@@ -66,8 +69,15 @@ const NewNoteForm = () => {
         // },
         body: JSON.stringify(formData)
       })
-      const response = await formResponse.json()
-      console.log(response)
+      if(formResponse.ok){
+        console.log('Note uploaded!')
+        router.back()
+        router.back()
+      } else {
+        const response = await formResponse.json()
+        console.log(response)
+        Alert.alert('Error Uploading Note', 'Internal server error')
+      }
     } catch (error) {
       console.log(error)
     }
