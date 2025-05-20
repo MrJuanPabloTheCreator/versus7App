@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   customButtonText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     // textAlign: 'center',
   },

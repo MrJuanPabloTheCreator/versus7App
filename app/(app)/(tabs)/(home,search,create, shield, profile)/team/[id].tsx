@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Text, View } from 'components';
 
-const User = () => {
+const Team = () => {
   return (
     <View>
         <Text>
@@ -14,4 +14,4 @@ const User = () => {
   )
 }
 
-export default User
+export default Team

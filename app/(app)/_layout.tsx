@@ -15,9 +15,9 @@ const AppLayout = () => {
         return <Text>Loading...</Text>
     }
 
-    if (!session?.sub) {
-        return <Redirect href="(auth)/login/login" />;
-    }
+    // if (!session?.sub) {
+    //     return <Redirect href="(auth)/login/login" />;
+    // }
 
     return (
         <WebSocketProvider>

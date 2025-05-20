@@ -1,10 +1,12 @@
 import { StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import { Button, PostCard, Text, View, XStack, YStack } from 'components'
 import useSession from 'contexts/SessionContext/useSession';
 import useTheme from 'contexts/ThemeContext/useTheme';
+import Feather from '@expo/vector-icons/Feather';
 
 const profileTabs = [
   'Activity',
@@ -29,30 +31,42 @@ const ProfileTab = () => {
   const { themeConstants } = useTheme();
   const { session } = useSession();
 
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
-      <XStack style={{ gap: 8, padding: 8, justifyContent: 'flex-start' }}>
+    <View style={{ backgroundColor: themeConstants.colors.background }}>
+      <Image
+        style={{ width: '100%', height: 180, marginBottom: 120 }}
+        source={require('assets/field.png')}
+      />
+      <TouchableOpacity 
+        onPress={() => router.push('profile/settings')} 
+        style={{ 
+            width: 36, height: 36,
+            backgroundColor: themeConstants.colors.background, borderRadius: 28,
+            position: 'absolute', top: 48, right: 16, 
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}
+      >
+        <Feather name="settings" size={22} color={themeConstants.colors.text} style={{ position: 'absolute' }}/>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        onPress={() => router.push('profile/settings')} 
+        style={{ 
+            width: 36, height: 36,
+            backgroundColor: themeConstants.colors.background, borderRadius: 28,
+            position: 'absolute', top: 88, right: 16, 
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}
+      >
+        <Feather name="edit" size={22} color={themeConstants.colors.text} style={{ position: 'absolute' }}/>
+      </TouchableOpacity>
+      {/* <XStack style={{ gap: 8, padding: 8, justifyContent: 'flex-start' }}>
         <YStack fitContent>
           <Image
             style={{ width: 150, height: 150, borderRadius: 25 }}
             src={session?.picture || 'https://randomuser.me/api/portraits/men/1.jpg'}
           />
-          <Text style={{ 
-            position: 'absolute', 
-            bottom: -10, 
-            right: -10, 
-            zIndex: 10, 
-            backgroundColor: 'black',
-            color: themeConstants.colors.primary,
-            textAlign: 'center',
-            width: 44,
-            height: 44,
-            borderRadius: 5,
-            fontSize: 32,
-            fontWeight: 600
-          }}>
-            7
-          </Text>
         </YStack>
         <YStack style={{ flex: 1, gap: 12 }}>
           <XStack style={{ gap: 12 }}>
@@ -74,12 +88,31 @@ const ProfileTab = () => {
             ))}
           </XStack>
         </YStack>
-      </XStack>
-      <XStack style={{ gap: 8, padding: 8 }}>
+      </XStack> */}
+      <YStack style={{position: 'absolute', top: 92}}>
+        <Image
+          style={{ width: 150, height: 150, borderRadius: 25 }}
+          src={session?.picture || 'https://randomuser.me/api/portraits/men/1.jpg'}
+        />
+        <Text style={{ fontSize: 24, fontWeight: 600, justifyContent: 'center', paddingTop: 8 }}>Juan Pablo Cerda</Text>
+      </YStack>
+      {/* <XStack style={{ paddingTop: 120, gap: 8 }}>
+        <TouchableOpacity>
+          <Feather name="settings" size={24} color={themeConstants.colors.text} style={{ }}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ 
+            backgroundColor: themeConstants.colors.background, padding: 8, borderRadius: 12,
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+          }}>
+          <Feather name="edit" size={24} color={themeConstants.colors.text} style={{ }} />
+          <Text style={{ fontSize: 12}}>Edit</Text>
+        </TouchableOpacity>
+      </XStack> */}
+      {/* <XStack style={{ gap: 8, padding: 8, paddingTop: 120 }}>
         <Button style={{ flex: 1, paddingVertical: 10}} text={'Amigos'}/>
         <Button style={{ flex: 1, paddingVertical: 10}} type='default' text={'Enviar mensaje'}/>
-      </XStack>
-      <YStack style={{ backgroundColor: themeConstants.colors.background, overflow: 'hidden' }}>
+      </XStack> */}
+      <YStack style={{ backgroundColor: themeConstants.colors.background }}>
         <XStack style={{ backgroundColor: themeConstants.colors.secondary}}>
           {profileTabs.map((tab, index) => (
             <TouchableOpacity 

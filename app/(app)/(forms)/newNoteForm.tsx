@@ -118,7 +118,7 @@ const NewNoteForm = () => {
   // });
 
   return (
-    <YStack style={{ padding: 8, gap: 8 }}>
+    <YStack style={{ padding: 12, gap: 8 }}>
       <SelectAccount session={session}/>
 
       <XStack style={{ flexWrap: 'wrap', gap: 4 }}>
@@ -127,6 +127,7 @@ const NewNoteForm = () => {
             fitContent
             key={index}
             text={option}
+            textStyle={{ fontSize: 14 }}
             type={watch('title') === option ? 'active' : 'default'}
             onPress={() => handleTitleChange(option)}
           />
@@ -167,6 +168,11 @@ const NewNoteForm = () => {
         onPress={() => router.push(`utils/datePicker?refId=${selectDateRefId.current}`)}
         logo={<MaterialCommunityIcons name="calendar-clock-outline" size={24} color={themeConstants.colors.text} />}
       />
+      {/* <AddDetails
+        text={watch('date').split('T')[0] || 'Additional Details'}
+        onPress={() => router.push(`utils/datePicker?refId=${selectDateRefId.current}`)}
+        logo={<MaterialCommunityIcons name="calendar-clock-outline" size={24} color={themeConstants.colors.text} />}
+      /> */}
       {/* <Button text={"Get all refs"} onPress={getAllRefs}/> */}
       <Button text={"Subir nota"} type='modest' onPress={handleSubmit(onSubmit)}/>
     </YStack>

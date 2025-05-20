@@ -23,7 +23,7 @@ export default Text;
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'normal',
     },
 });

@@ -44,7 +44,7 @@ const User = () => {
       case 'sent':
         return 'Request Sent';
       case 'pending':
-        return 'Pending';
+        return 'Accept';
       case 'friends':
         return 'Unfriend';
       default:
@@ -59,7 +59,7 @@ const User = () => {
       case 'sent':
         return 'modest';
       case 'pending':
-        return 'modest';
+        return 'active';
       case 'friends':
         return 'modest';
       default:

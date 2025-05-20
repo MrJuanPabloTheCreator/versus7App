@@ -10,9 +10,10 @@ interface InputProps extends TextInputProps {
     name?: string;
     control?: Control<any>;
     rules?: object  
+    fitContent?: boolean
 }
 
-const Input: React.FC<InputProps> = ({ name, control, rules, style, ...props }) => {
+const Input: React.FC<InputProps> = ({ name, control, rules, style, fitContent=false, ...props }) => {
     const formControlled = name && control;
 
     const {
@@ -24,7 +25,7 @@ const Input: React.FC<InputProps> = ({ name, control, rules, style, ...props }) 
     const { themeConstants } = useTheme();
 
     return (
-        <View style={styles.container}>
+        <View style={[{ flex: 1 }, fitContent ? { }:{ width: '100%' }]}>
             <TextInput
                 placeholderTextColor="gray"
                 value={formControlled ? value : props.value}
@@ -45,15 +46,12 @@ const Input: React.FC<InputProps> = ({ name, control, rules, style, ...props }) 
 export default Input;
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%'
-    },
     defaultInput: {
-        width: '100%',
+        flex: 1,
         padding: 12,
         borderColor: "gray",
         // borderWidth: 1,
-        borderRadius: 12,
+        borderRadius: 24,
         fontSize: 16,
     },
     error: {

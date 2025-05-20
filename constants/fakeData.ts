@@ -155,6 +155,191 @@ export const facilities: Facility[] = [
     }
 ];
 
+export const tournaments: Tournament[] = [
+    {
+        tournament_id: '11',
+        name: 'Miami Championship',
+        facility_name: 'Ciudad Deportiva Iván Zamorano',
+        price: 100,
+        playersPerSide: 7,
+        pictures: [
+            'assets/tournament1.png',
+        ],
+        address: 'Av. Padre Hurtado 2650, Las Condes, Santiago, Chile',
+        coordinates: {
+            x: -33.4286099945508,
+            y: -70.53722122333065
+        }
+    }
+]
+
+export const notes = [
+    {
+        post_id: `post_1`,
+        sub: 1,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Juan_1`,
+        picture: `https://randomuser.me/api/portraits/men/1.jpg`,
+        address: 'Av. Padre Hurtado 2650, Las Condes, Santiago, Chile',
+        date_time: ''
+    },
+    {
+        post_id: `post_2`,
+        sub: 2,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Pedro_2`,
+        picture: `https://randomuser.me/api/portraits/men/2.jpg`,
+    },
+    {
+        post_id: `post_3`,
+        sub: 3,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Diego_3`,
+        picture: `https://randomuser.me/api/portraits/men/3.jpg`,
+    },
+    {
+        post_id: `post_4`,
+        sub: 4,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Martin_4`,
+        picture: `https://randomuser.me/api/portraits/men/4.jpg`,
+    },
+    {
+        post_id: `post_5`,
+        sub: 5,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Mateo_5`,
+        picture: `https://randomuser.me/api/portraits/men/5.jpg`,
+    },
+    {
+        post_id: `post_6`,
+        sub: 6,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Lucas_6`,
+        picture: `https://randomuser.me/api/portraits/men/6.jpg`,
+    },
+    {
+        post_id: `post_7`,
+        sub: 7,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Matias_7`,
+        picture: `https://randomuser.me/api/portraits/men/7.jpg`,
+    },
+    {
+        post_id: `post_8`,
+        sub: 8,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Sebastian_8`,
+        picture: `https://randomuser.me/api/portraits/men/8.jpg`,
+    },
+    {
+        post_id: `post_9`,
+        sub: 9,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Gabriel_9`,
+        picture: `https://randomuser.me/api/portraits/men/9.jpg`,
+    },
+    {
+        post_id: `post_10`,
+        sub: 10,
+        title: 'Buscando Jugador',
+        description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+        timestamp: '2024-11-08T02:47:59.000Z',
+        username: `Nicolas_10`,
+        picture: `https://randomuser.me/api/portraits/men/10.jpg`,
+    },
+];
+
+export const events: AppEvent[] = [
+    {
+        eventType: 'match',
+        details: {
+            match_id: '1',
+            team_1: {
+              team_id: 'team_1',
+              name: 'Barcelona',
+              image: require('assets/barcelona.png'),
+            },
+            team_2: {
+              team_id: 'team_2',
+              name: 'PSG',
+              image: require('assets/PSG.png'),
+            },
+            date_time: '2025-4-24T14:00:00Z',
+            location: 'Estadio Nacional',
+            address_coordinates: '-33.45694,-70.64827',
+        },
+    },
+    {
+        eventType: 'match',
+        details: {
+            match_id: '2',
+            team_1: {
+              team_id: 'team_3',
+              name: 'Los Leones',
+              image: '',
+            },
+            team_2: {
+              team_id: 'team_4',
+              name: 'Las Águilas',
+              image: '',
+            },
+            date_time: '2025-4-25T14:00:00Z',
+            location: 'Estadio Monumental',
+            address_coordinates: '-33.46912,-70.64177',
+        },
+    },
+    {
+        eventType: 'match',
+        details: {
+            match_id: '3',
+            team_1: {
+              team_id: 'team_5',
+              name: 'Los Dragones',
+              image: '',
+            },
+            team_2: {
+              team_id: 'team_6',
+              name: 'Los Lobos',
+              image: '',
+            },
+            date_time: '2024-11-10T18:00:00Z',
+            location: 'Estadio Bicentenario',
+            address_coordinates: '-33.50000,-70.60000',
+        },
+    },
+    // {
+    //     eventType: 'post',
+    //     details: {
+    //         post_id: `post_9`,
+    //         sub: 9,
+    //         title: 'Buscando Jugador',
+    //         description: `Wena cabros! Yo y my equipo calceteam estamos buscando un jugador para la liga premier, estaria ideal que fuese 9 o delantero flexible...ver mas`,
+    //         timestamp: '2024-11-08T02:47:59.000Z',
+    //         username: `Gabriel_9`,
+    //         picture: `https://randomuser.me/api/portraits/men/9.jpg`,
+    //     },
+    // }
+]
+
 
 export const fakeSchedules = [ '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', 
 '22:00', '23:00', '00:00', '01:00', '02:00', '03:00']

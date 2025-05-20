@@ -14,6 +14,7 @@ import AddDetails from "./addDetails";
 import TextArea from "./textArea";
 import SelectAccount from "./selectAccount";
 import LocationSearch from "./locationSearch";
+import MatchCard from "./matchCard";
 
 export { 
     View, 
@@ -31,5 +32,6 @@ export {
     TextArea, 
     VS7logo,
     SelectAccount,
-    LocationSearch
+    LocationSearch,
+    MatchCard
 };

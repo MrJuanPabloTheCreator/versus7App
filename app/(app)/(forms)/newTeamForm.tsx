@@ -22,14 +22,14 @@ type TeamIcon = {
 }
 
 const NewTeamForm = () => {
+  const { session, getAuthorizer } = useSession();
+  const { themeConstants } = useTheme();
   const { setValue, handleSubmit, control, watch, formState: { errors }, } = useForm<NewTeamFormFields>({
-    defaultValues: { teamName: '', teamIconURL: '', invitedUsers: []}
+    defaultValues: { createdBy: session?.sub, teamName: '', teamIconURL: '', invitedUsers: []}
   })
   const [invitedUsers, setInvitedUsers] = useState<UserInfo[]>([])
   const [teamIcon, setTeamIcon] = useState<TeamIcon | null>(null)
 
-  const { session, getAuthorizer } = useSession();
-  const { themeConstants } = useTheme();
   const router = useRouter();
 
   const selectUsersRefId = useRef<string | null>(null);
@@ -106,6 +106,8 @@ const NewTeamForm = () => {
       if(teamIcon?.teamIconMetadata){
         const { fileType, fileSize } = teamIcon.teamIconMetadata;
         const { signedUrl, imageUrl } = await getSignedURL(fileType, fileSize);
+        // console.log(signedUrl)
+        // console.log(imageUrl)
 
         const uploadResponse = await fetch(signedUrl, {
           method: 'PUT',
@@ -119,24 +121,29 @@ const NewTeamForm = () => {
         if(uploadResponse.ok){
           formData.teamIconURL = imageUrl;       
         } else {
+          console.log("Response: ", await uploadResponse)
           throw new Error("Failed to upload image");
         }
       }
-
+      const authorizer = await getAuthorizer();
       const postTeam = await fetch('https://5k8r7j8jm0.execute-api.sa-east-1.amazonaws.com/Development/teams', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${await getAuthorizer()}`,
+          'Authorization': `Bearer ${authorizer}`,
         },
         body: JSON.stringify(formData),
       })
 
-      if(postTeam.ok){
-        console.log(await postTeam.json())
-      } else {
+      if(!postTeam.ok){
+        const { message } = await postTeam.json()
+        console.log(message)
         throw new Error("Failed to post team");
       }
+
+      Alert.alert('Team created Succesfully')
+      // router.back()
+      // router.back()
     } catch(error) {
       Alert.alert('Error creating team.',`${error}`);
     }
@@ -165,7 +172,7 @@ const NewTeamForm = () => {
 
   return (
     <ScrollView>
-      <YStack style={{ gap: 12, padding: 8 }}>
+      <YStack style={{ gap: 12, padding: 12 }}>
 
         <TouchableOpacity onPress={handlePickImage}> 
           {teamIcon ? (
@@ -219,7 +226,7 @@ const NewTeamForm = () => {
         )} 
 
         <AddDetails 
-          text='Add Players' 
+          text='Invite Players'
           logo={ <FontAwesome6 name="user-shield" size={24} color="white" /> }
           onPress={() => router.push(`(app)/(forms)/utils/addTeamMembers?refId=${selectUsersRefId.current}`)}
         />
